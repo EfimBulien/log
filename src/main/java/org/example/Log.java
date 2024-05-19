@@ -12,9 +12,9 @@ public class Log {
             FileHandler fh = new FileHandler(fileName, true);
             fh.setFormatter(new SimpleFormatter());
             logger.addHandler(fh);
-            logger.setLevel(Level.WARNING);
+            logger.setLevel(Level.ALL);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Ошибка создания файла логов: ", e);
         }
     }
 }
