@@ -1,10 +1,8 @@
 package org.example;
 
-import java.io.File;
-
 public class Person {
     private String name;
-    static Log personLog;
+    private static final Log personLog = new Log("logs/person.log");
 
     public Person() {
         personLog.logger.info("Person name: " + name);
@@ -33,17 +31,5 @@ public class Person {
 
     public static Person createPerson() {
         return new Person();
-    }
-
-    static {
-        try {
-            File file = new File("logs/person.log");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            personLog = new Log("logs/person.log");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

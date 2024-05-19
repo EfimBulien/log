@@ -1,25 +1,10 @@
 package org.example;
-import java.io.File;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Main {
-    static Log log;
-
-    static {
-        try {
-            File file = new File("logs/main.log");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            log = new Log("logs/main.log");
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.logger.warning(e.getMessage());
-            log.logger.severe(e.getMessage());
-        }
-    }
-
+    private static final Log log = new Log("logs/main.log");
     static Scanner scanner = new Scanner(System.in);
 
     public static ArrayList<Hammer> rawHammers = new ArrayList<>();
@@ -39,8 +24,8 @@ public class Main {
     };
 
     public static void main(String[] args) {
+        int index, num;
         boolean isRunning = true;
-        int index;
 
         String[] functionNames = {
                 "Статус завода",
@@ -54,9 +39,8 @@ public class Main {
 
         try {
             while (isRunning) {
-                int num = 1;
-
                 System.out.println("Выберите действие на заводе:");
+                num = 1;
 
                 for (String functionName : functionNames) {
                     System.out.println(num + ". " + functionName);
@@ -64,46 +48,47 @@ public class Main {
                 }
 
                 System.out.println("0. Выйти из программы");
-
                 int choice = scanner.nextInt();
 
-                if (choice == 1) factoryStatus();
-                else if (choice == 2) {
-                    String output = getWork();
-                    System.out.println(output);
-                }
-                else if (choice == 3) {
-                    String output = getRandomEmployee();
-                    System.out.println(output);
-                }
-                else if (choice == 4) {
-                    String output = getPackedHammer();
-                    System.out.println(output);
-                }
-                else if (choice == 5) {
-                    String output = getRawHammer();
-                    System.out.println(output);
-                }
-                else if (choice == 6) {
-                    System.out.println("Выберете молоток: ");
-                    index = scanner.nextInt();
-                    addHammers(index);
-                    String output = "Молоток " + index + " добавлен";
-                    System.out.println(output);
-                }
-                else if (choice == 7) {
-                    System.out.println("Выберете молоток: ");
-                    index = scanner.nextInt();
-                    sealHammer(index);
-                    String output = "Молоток " + index + " упакован";
-                    System.out.println(output);
-                }
-                else if (choice == 0) {
-                    System.out.println("Удачного вам дня!");
-                    isRunning = false;
-                }
-                else {
-                    System.out.println("Некорректный ввод");
+                switch (choice) {
+                    case 1:
+                        factoryStatus();
+                        break;
+                    case 2:
+                        String workOutput = getWork();
+                        System.out.println(workOutput);
+                        break;
+                    case 3:
+                        String employeeOutput = getRandomEmployee();
+                        System.out.println(employeeOutput);
+                        break;
+                    case 4:
+                        String packedHammerOutput = getPackedHammer();
+                        System.out.println(packedHammerOutput);
+                        break;
+                    case 5:
+                        String rawHammerOutput = getRawHammer();
+                        System.out.println(rawHammerOutput);
+                        break;
+                    case 6:
+                        System.out.println("Выберете молоток: ");
+                        index = scanner.nextInt();
+                        addHammers(index);
+                        System.out.println("Молоток " + index + " добавлен");
+                        break;
+                    case 7:
+                        System.out.println("Выберете молоток: ");
+                        index = scanner.nextInt();
+                        sealHammer(index);
+                        System.out.println("Молоток " + index + " упакован");
+                        break;
+                    case 0:
+                        System.out.println("Удачного вам дня!");
+                        isRunning = false;
+                        break;
+                    default:
+                        System.out.println("Некорректный ввод");
+                        break;
                 }
             }
         } catch (Exception e) {
@@ -149,17 +134,14 @@ public class Main {
     }
 
     public static String getPackedHammer() {
-        try {
-            int index = new Random().nextInt(packedHammers.size());
-            return packedHammers.get(index).getHammer();
-        } catch (Exception e) {
-            log.logger.warning(e.getMessage());
-            log.logger.severe(e.getMessage());
-            return null;
-        }
+        return getString(packedHammers);
     }
 
     public static String getRawHammer() {
+        return getString(rawHammers);
+    }
+
+    private static String getString(ArrayList<Hammer> rawHammers) {
         try {
             int index = new Random().nextInt(rawHammers.size());
             return rawHammers.get(index).getHammer();
