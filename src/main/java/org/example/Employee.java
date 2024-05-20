@@ -1,7 +1,9 @@
 package org.example;
 
+import java.io.File;
+
 public class Employee extends Person {
-    private static final Log employeeLog = new Log("logs/employee.log");
+    private static Log employeeLog;
     private String name;
 
     public Employee(String name) {
@@ -32,6 +34,21 @@ public class Employee extends Person {
             employeeLog.logger.warning(e.getMessage());
             employeeLog.logger.severe(e.getMessage());
             return null;
+        }
+    }
+
+    static {
+        try {
+            File file = new File("logs/employee.log");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            employeeLog = new Log("logs/employee.log");
+        } catch (Exception e) {
+            if (employeeLog != null) {
+                employeeLog.logger.warning(e.getMessage());
+                employeeLog.logger.severe(e.getMessage());
+            }
         }
     }
 }

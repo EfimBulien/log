@@ -1,11 +1,11 @@
 package org.example;
-
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Main {
-    private static final Log log = new Log("logs/main.log");
-    static Scanner scanner = new Scanner(System.in);
+    private static Log log;
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static ArrayList<Hammer> rawHammers = new ArrayList<>();
     public static ArrayList<Hammer> packedHammers = new ArrayList<>();
@@ -24,8 +24,9 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        int index, num;
         boolean isRunning = true;
+        int index, num, choice;
+        String output;
 
         String[] functionNames = {
                 "Статус завода",
@@ -48,44 +49,46 @@ public class Main {
                 }
 
                 System.out.println("0. Выйти из программы");
-                int choice = scanner.nextInt();
+
+                choice = scanner.nextInt();
 
                 switch (choice) {
+                    case 0:
+                        System.out.println("Удачного вам дня!");
+                        isRunning = false;
+                        break;
                     case 1:
                         factoryStatus();
                         break;
                     case 2:
-                        String workOutput = getWork();
-                        System.out.println(workOutput);
+                        output = getWork();
+                        System.out.println(output);
                         break;
                     case 3:
-                        String employeeOutput = getRandomEmployee();
-                        System.out.println(employeeOutput);
+                        output = getRandomEmployee();
+                        System.out.println(output);
                         break;
                     case 4:
-                        String packedHammerOutput = getPackedHammer();
-                        System.out.println(packedHammerOutput);
+                        output = getPackedHammer();
+                        System.out.println(output);
                         break;
                     case 5:
-                        String rawHammerOutput = getRawHammer();
-                        System.out.println(rawHammerOutput);
+                        output = getRawHammer();
+                        System.out.println(output);
                         break;
                     case 6:
                         System.out.println("Выберете молоток: ");
                         index = scanner.nextInt();
                         addHammers(index);
-                        System.out.println("Молоток " + index + " добавлен");
+                        output = "Молоток " + index + " добавлен";
+                        System.out.println(output);
                         break;
                     case 7:
                         System.out.println("Выберете молоток: ");
                         index = scanner.nextInt();
                         sealHammer(index);
-                        System.out.println("Молоток " + index + " упакован");
-                        break;
-                    case 0:
-                        System.out.println("Удачного вам дня!");
-                        isRunning = false;
-                        break;
+                        output = "Молоток " + index + " упакован";
+                        System.out.println(output);
                     default:
                         System.out.println("Некорректный ввод");
                         break;
@@ -168,6 +171,19 @@ public class Main {
             Hammer hammer = rawHammers.get(index);
             packedHammers.add(hammer);
             rawHammers.remove(index);
+        } catch (Exception e) {
+            log.logger.warning(e.getMessage());
+            log.logger.severe(e.getMessage());
+        }
+    }
+
+    static {
+        try {
+            File file = new File("logs/main.log");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            log = new Log("logs/main.log");
         } catch (Exception e) {
             log.logger.warning(e.getMessage());
             log.logger.severe(e.getMessage());

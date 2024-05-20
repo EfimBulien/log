@@ -70,3 +70,27 @@ INFO: Employee name: Солнцев Гоген
 WARNING: null
 мая 13, 2024 4:45:53 PM org.example.Main main
 SEVERE: null
+мая 20, 2024 9:07:42 AM org.example.Work <init>
+INFO: Work task: Собирать молотки
+мая 20, 2024 9:07:42 AM org.example.Work <init>
+INFO: Work task: Пилить ручки
+мая 20, 2024 9:07:42 AM org.example.Work <init>
+INFO: Work task: Делать бойки
+мая 20, 2024 9:07:42 AM org.example.Work <init>
+INFO: Work task: Упаковывать молотки
+мая 20, 2024 9:07:42 AM org.example.Person <init>
+INFO: Person name: null
+мая 20, 2024 9:07:42 AM org.example.Employee <init>
+INFO: Employee name: Ходжахов Эмиль
+мая 20, 2024 9:07:42 AM org.example.Person <init>
+INFO: Person name: null
+мая 20, 2024 9:07:42 AM org.example.Employee <init>
+INFO: Employee name: Лысенко Семён
+мая 20, 2024 9:07:42 AM org.example.Person <init>
+INFO: Person name: null
+мая 20, 2024 9:07:42 AM org.example.Employee <init>
+INFO: Employee name: Солнцев Гоген
+мая 20, 2024 9:07:54 AM org.example.Main main
+WARNING: null
+мая 20, 2024 9:07:54 AM org.example.Main main
+SEVERE: null

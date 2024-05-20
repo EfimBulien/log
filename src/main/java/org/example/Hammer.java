@@ -1,8 +1,10 @@
 package org.example;
 
+import java.io.File;
+
 public class Hammer{
     private String hammer;
-    private static final Log hammerLog = new Log("logs/hammer.log");
+    private static Log hammerLog;
 
     public Hammer(String hammer) {
         hammerLog.logger.info("Hammer: " + hammer);
@@ -32,6 +34,21 @@ public class Hammer{
             hammerLog.logger.warning(e.getMessage());
             hammerLog.logger.severe(e.getMessage());
             return null;
+        }
+    }
+
+    static {
+        try {
+            File file = new File("logs/hammer.log");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            hammerLog = new Log("logs/hammer.log");
+        } catch (Exception e) {
+            if (hammerLog != null) {
+                hammerLog.logger.warning(e.getMessage());
+                hammerLog.logger.severe(e.getMessage());
+            }
         }
     }
 }

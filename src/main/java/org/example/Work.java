@@ -1,8 +1,10 @@
 package org.example;
 
+import java.io.File;
+
 public class Work{
-    private String task;
-    private static final Log workLog = new Log("logs/work.log");
+    String task;
+    private static Log workLog;
 
     public Work(String task) {
         workLog.logger.info("Work task: " + task);
@@ -32,6 +34,21 @@ public class Work{
           workLog.logger.warning(e.getMessage());
           workLog.logger.severe(e.getMessage());
           return null;
+        }
+    }
+
+    static {
+        try {
+            File file = new File("logs/work.log");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            workLog = new Log("logs/work.log");
+        } catch (Exception e) {
+            if (workLog != null) {
+                workLog.logger.warning(e.getMessage());
+                workLog.logger.severe(e.getMessage());
+            }
         }
     }
 }

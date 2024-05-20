@@ -6,15 +6,12 @@ import java.util.logging.*;
 public class Log {
     public Logger logger;
 
-    public Log(String fileName) {
-        logger = Logger.getLogger(fileName);
-        try {
-            FileHandler fh = new FileHandler(fileName, true);
-            fh.setFormatter(new SimpleFormatter());
-            logger.addHandler(fh);
-            logger.setLevel(Level.ALL);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Ошибка создания файла логов: ", e);
-        }
+    public Log(String fileName) throws SecurityException ,IOException {
+        FileHandler fh = new FileHandler(fileName, true);
+        logger = Logger.getLogger("logger");
+        logger.addHandler(fh);
+        logger.setLevel(Level.INFO);
+        SimpleFormatter formatter = new SimpleFormatter();
+        fh.setFormatter(formatter);
     }
 }

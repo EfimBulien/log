@@ -1,8 +1,10 @@
 package org.example;
 
+import java.io.File;
+
 public class Person {
     private String name;
-    private static final Log personLog = new Log("logs/person.log");
+    private static Log personLog;
 
     public Person() {
         personLog.logger.info("Person name: " + name);
@@ -31,5 +33,20 @@ public class Person {
 
     public static Person createPerson() {
         return new Person();
+    }
+
+    static {
+        try {
+            File file = new File("logs/person.log");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            personLog = new Log("logs/person.log");
+        } catch (Exception e) {
+            if (personLog != null) {
+                personLog.logger.warning(e.getMessage());
+                personLog.logger.severe(e.getMessage());
+            }
+        }
     }
 }
